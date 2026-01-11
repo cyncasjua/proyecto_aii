@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1 class="title">Carga de libros</h1>
+        <p>{{ message }}</p>
+        <a href="{% url 'listado_libros' %}" class="button purple is-circular mt-3">Volver al listado</a>
+    </div>
+</section>
+{% endblock %}

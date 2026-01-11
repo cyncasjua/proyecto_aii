@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1 class="title is-4">Tus libros favoritos</h1>
+        {% if libros %}
+        <div class="columns is-multiline" style="margin-left:0; margin-right:0;">
+            {% for libro in libros %}
+                {% if libro.rating|lower == "one" %}
+                    {% with rating_num=1 %}
+                        {% include "_favorito_card.html" %}
+                    {% endwith %}
+                {% elif libro.rating|lower == "two" %}
+                    {% with rating_num=2 %}
+                        {% include "_favorito_card.html" %}
+                    {% endwith %}
+                {% elif libro.rating|lower == "three" %}
+                    {% with rating_num=3 %}
+                        {% include "_favorito_card.html" %}
+                    {% endwith %}
+                {% elif libro.rating|lower == "four" %}
+                    {% with rating_num=4 %}
+                        {% include "_favorito_card.html" %}
+                    {% endwith %}
+                {% elif libro.rating|lower == "five" %}
+                    {% with rating_num=5 %}
+                        {% include "_favorito_card.html" %}
+                    {% endwith %}
+                {% else %}
+                    {% with rating_num=0 %}
+                        {% include "_favorito_card.html" %}
+                    {% endwith %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <nav class="pagination is-centered mt-4" role="navigation" aria-label="pagination">
+            {% if page_obj.has_previous %}
+                <a class="pagination-previous" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% else %}
+                <span class="pagination-previous" disabled>Anterior</span>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <a class="pagination-next" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            {% else %}
+                <span class="pagination-next" disabled>Siguiente</span>
+            {% endif %}
+            <ul class="pagination-list">
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li><span class="pagination-link is-current">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li><a class="pagination-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+        {% else %}
+            <p>No tienes libros favoritos aún.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

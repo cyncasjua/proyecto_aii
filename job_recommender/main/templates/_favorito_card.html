@@ -1,0 +1,28 @@
+<div class="column is-one-quarter" style="padding:0.25rem; min-width:150px; max-width:200px;">
+    <a href="{% url 'detalle_libro' libro.id %}" style="text-decoration:none; color:inherit;">
+        <div class="card" style="height: 100%; display: flex; flex-direction: column; min-height:180px;">
+            <div class="card-image" style="flex-shrink: 0;">
+                <figure class="image is-4by3" style="height: 120px; display: flex; align-items: center; justify-content: center;">
+                    <img src="{{ libro.imagen_url }}" alt="{{ libro.titulo }}" style="height: 100%; width: 100%; object-fit: contain; background: #fff;">
+                </figure>
+            </div>
+            <div class="card-content" style="flex: 1 1 auto; display: flex; flex-direction: column; padding:0.3rem;">
+                <p class="title is-7" style="font-size:0.95rem; margin-bottom:0.2em;">{{ libro.titulo }}</p>
+                <p style="font-size:0.90rem; margin-bottom:0.1em;"><strong>Categoría:</strong> {{ libro.categoria }}</p>
+                <p style="font-size:0.90rem; margin-bottom:0.1em;"><strong>Precio:</strong> {{ libro.precio }}</p>
+                <p style="font-size:0.90rem; margin-bottom:0.1em;">
+                    <strong>Rating:</strong>
+                    <span>
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= rating_num %}
+                                <span style="color:#e74c3c;">&#9733;</span>
+                            {% else %}
+                                <span style="color:#ddd;">&#9733;</span>
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                </p>
+            </div>
+        </div>
+    </a>
+</div>

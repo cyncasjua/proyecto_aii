@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1 class="title">Resultados de búsqueda</h1>
+        <form method="get" action="{% url 'searcher' %}" class="mb-5" style="display: flex; gap: 10px;">
+            <input class="input" type="text" name="q" placeholder="Buscar libros..." value="{{ query }}">
+            <button class="button purple is-circular" type="submit">Buscar</button>
+        </form>
+        <a href="{% url 'cargar_libros' %}" class="button purple is-circular mb-5">Cargar libros desde la web</a>
+        <a href="{% url 'listado_libros' %}" class="button purple is-circular mb-5">Ver todos los libros</a>
+        <div class="columns is-multiline">
+            {% for libro in libros %}
+            <div class="column is-one-quarter">
+                <a href="{% url 'detalle_libro' libro.id %}" style="text-decoration: none; color: inherit;">
+                    <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                        <div class="card-image" style="flex-shrink: 0;">
+                            <figure class="image is-4by3" style="height: 320px; display: flex; align-items: center; justify-content: center;">
+                                <img src="{{ libro.imagen_url }}" alt="{{ libro.titulo }}" style="height: 100%; width: 100%; object-fit: contain; background: #fff;">
+                            </figure>
+                        </div>
+                        <div class="card-content" style="flex: 1 1 auto; display: flex; flex-direction: column;">
+                            <p class="title is-5">{{ libro.titulo }}</p>
+                            <p><strong>Categoría:</strong> {{ libro.categoria }}</p>
+                            <p><strong>Precio:</strong> {{ libro.precio }}</p>
+                            <p><strong>Disponibilidad:</strong> {{ libro.disponibilidad }}</p>
+                            <p><strong>Rating:</strong> {{ libro.rating }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% if not libros %}
+            <p>No se encontraron resultados.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+</section>
+</body>
+</html>
