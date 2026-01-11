@@ -1,5 +1,5 @@
 """
-ASGI config for job_recommender project.
+ASGI config for book_recommender project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "job_recommender.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "book_recommender.settings")
 
 application = get_asgi_application()
