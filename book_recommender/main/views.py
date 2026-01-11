@@ -87,13 +87,18 @@ def listado_libros(request):
     else:
         puntuados = PuntuacionLibro.objects.filter(session_key=session_key, puntuacion__gte=4)
 
-    puntuados_libros = set(p.libro for p in puntuados)
-    similares = set()
+    similares = []
     for p in puntuados:
-        for sim in recomendar_libros(p.libro.id, top_n=20):
-            if sim not in puntuados_libros:
-                similares.add(sim)
-    recomendados = list(similares)
+        recs = recomendar_libros(p.libro.id, top_n=5)
+        if not recs:
+            recs = recomendar_libros(p.libro.id, top_n=10)
+        similares.extend(recs)
+    vistos = set()
+    recomendados = []
+    for libro in similares:
+        if libro.id not in vistos and libro not in [p.libro for p in puntuados]:
+            recomendados.append(libro)
+            vistos.add(libro.id)
     random.shuffle(recomendados)
     recomendados = recomendados[:5]
     primer_id = recomendados[0].id if recomendados else 0
