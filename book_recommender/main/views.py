@@ -159,8 +159,12 @@ def searcher(request):
         with ix.searcher() as searcher:
             whoosh_results = searcher.search(q, limit=None)
             for r in whoosh_results:
-                libro = Libro.objects.get(id=r['id'])
-                results.append(libro)
+                try:
+                    libro = Libro.objects.get(id=r['id'])
+                    results.append(libro)
+                except Libro.DoesNotExist:
+                    # Skip if the book does not exist in the database
+                    continue
 
     return render(request, "searcher.html", {
         "query": query,
